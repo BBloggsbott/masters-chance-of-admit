@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% block body %}
+<h2>Calculate your Chances</h2>
+{% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
+{% if chance %}<p class=success>Your chance of admittance is {{ chance }}%</p>{% endif %}
+    <form action="/calculate_chance" method=post>
+  <dl>
+    <dt>GRE Score (out of 340):
+    <dd><input type=text name=gre required>
+    <dt>Undergraduate CGPA (out of 10):
+    <dd><input type=text name=cgpa required>
+    <dt>TOEFL (out of 120):  <input type=checkbox name=toefl_req>Consider TOEFL score
+    <dd><input type=text name=toefl>
+    <dt>University Rating (out of 5):
+    <dd><input type=text name=univ required>
+    <dt>Strength of Statement of Purpose (out of 5):
+    <dd><input type=text name=sop required>
+    <dt>Strength of Letter of Recommendation (out of 5):
+    <dd><input type=text name=lor required>
+    <dt><input type=checkbox name=research>Research Experience (Checked: Yes, Unchecked: No)
+    <dd><input type=submit value=Calculate>
+  </dl>
+</form>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+{% block body %}
+    <p>A lot of undergraduate students are interested doing a post graduate course. This website is aimed at helping students understand the current status of admissions in universities and calculate their chance of admittance into a university.</p>
+    
+    <h2>The Data</h2>
+    <p>The <a href="https://www.kaggle.com/mohansacharya/graduate-admissions">data</a> used here was collected by <b>Mohan S Acharya et al.</b> for their work <b>A Comparison of Regression Models for Prediction of Graduate Admissions</b>.
+    It has the following features, all of which are taken into consideration in this website.<br>
+    
+    <ul>
+        <li>GRE Score (out of 340)</li>
+        <li>TOEFL Score (out of 120)</li>
+        <li>University Rating (out of 5)</li>
+        <li>Strength of Statement of Purpose (out of 5)</li>
+        <li>Strength of Letter of Recommendation (out of 5)</li>
+        <li>Undergraduate (out of 10)</li>
+        <li>Research Experience (Yes/No)</li>
+    </ul>
+    All these features are used to predict an applicant's chance of admittance.</p>
+
+    <h2>SHAP</h2>
+    <p>In this website, the importance of the above mentioned features is described in term of <a href="https://github.com/slundberg/shap"><b>SHAP (SHapley Additive exPlanations)</b></a>. It is a unified approach to explain the output of any machine learning model. Basically, a higher SHAP value means a higher influence on the model's prediction.</p>
+
+    <h2>Analytics</h2>
+    <p>Now we take a look at how each of the features effect the model's prediction.</p>
+    <h3>GRE</h3>
+    <p>The Graduate Record Examinations is a standardized test that is an admissions requirement for most graduate schools in the United States. The GRE is owned and administered by Educational Testing Service.</p>
+    <img src="{{ url_for('static', filename='gre_shap.png') }}" alt="GRE" class="center">
+    <p>We can see in the above plot that a high GRE score with Research experience can have a positive effect on your chances and a low GRE score with no Research experience can bring your chances down.</p>
+    <h3>TOEFL</h3>
+    <p>Test of English as a Foreign Language® is a standardized test to measure the English language ability of non-native speakers wishing to enroll in English-speaking universities. The test is accepted by many English-speaking academic and professional institutions. TOEFL is one of the two major English-language tests in the world, the other being the IELTS</p>
+    <img src="{{ url_for('static', filename='toefl_shap.png') }}" alt="TOEFL" class="center">
+    <p>A good TOEFL score and a good GRE score seems to have a good effect on your chances of getting into the college you want.</p>
+    <h3>CGPA</h3>
+    <p>CGPA (Cumulative Grade Points Average) is a grade pointing system used in the educational sector. Cumulative Grade Points is the average of grade points obtained in all the subjects.</p>
+    <img src="{{ url_for('static', filename='cgpa_shap.png') }}" alt="CGPA" class="center">
+    <p>Whoa! CGPA and GRE score together seem to have a the most effect on your chances. A good GRE score can still have a negative effect on your chance if your CGPA is low.</p>
+    <h3>University Rating, Statement of Purpose, Letter of Recommendation</h3>
+    <img src="{{ url_for('static', filename='univ_shap.png') }}" alt="UNIV" class="center">
+    <img src="{{ url_for('static', filename='sop_shap.png') }}" alt="SOP" class="center">
+    <img src="{{ url_for('static', filename='lor_shap.png') }}" alt="LOR" class="center">
+    <img src="{{ url_for('static', filename='research_shap.png') }}" alt="RESEARCH" class="center">
+    <p>When compared to the rest of the features, these have relatively low effect on your chances. but they still matter. An interesting thing to note here is that no matter how high your GRE score is, a lack of research experience can still bring your chance down and vice versa.</p>
+    <h2>Calculate your chances</h2>
+    <p>Now that you have seen how the different features affect your chances see where you stand by clicking <a href="/calculate_chance">here</a>.</p>
+{% endblock %}

@@ -1,0 +1,16 @@
+<!doctype html>
+<title>Masters - Chance of Admittance</title>
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+<div class=page>
+  <a href="/"><h1><span class="light-blue">Masters </span>- Chance of Admittance</h1></a>
+  <div class=metanav>
+    <a href="/calculate_chance">calculate your chances</a>
+  </div>
+  {% for message in get_flashed_messages() %}
+    <div class=flash>{{ message }}</div>
+  {% endfor %}
+  {% block body %}{% endblock %}
+  <div class=metanav>
+      Website by <a href="https://bbloggsbott.github.io">Vishal R</a>
+  </div>
+</div>

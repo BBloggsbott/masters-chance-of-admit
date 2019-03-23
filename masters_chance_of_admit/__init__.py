@@ -1,0 +1,1 @@
+from .masters_chance_of_admit import app
