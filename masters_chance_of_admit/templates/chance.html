@@ -3,7 +3,7 @@
 {% if chance %}<p>Your chance of admittance is <strong>{{ chance }}</strong></p>
 {% if image_loc %}
 <img src="{{ url_for('static', filename='shap.png') }}?{{ rand }}" alt="SHAP" class="center">
-<p>The Blue features (the features pointing to the right) reduce your chance of admittance and the red ones increase your chance of admittance. The longer the arrow, the larger the effect on your chance.</p>
+<p>The Blue features (the features pointing to the left) reduce your chance of admittance and the red ones increase your chance of admittance. The longer the arrow, the larger the effect on your chance.</p>
 <p><strong>Note: </strong>These values are not entirely accurate. A random factor was involved in the building of the model. The results also depend on the data used to train the data. The model currently used was trained using 500 records. More data could improve the results. To contribute data, contact the creator.</p>
 {% endif %}
 {% else %}
