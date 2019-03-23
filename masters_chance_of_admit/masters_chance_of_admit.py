@@ -46,7 +46,8 @@ def calculate_chance():
         explainer = shap.TreeExplainer(model)
         shap_values = explainer.shap_values(inputs)
         image_loc = os.path.join(app.config['IMAGES_FOLDER'], 'shap.png')
-        os.remove(image_loc)
+        if(os.path.isfile(image_loc)):
+            os.remove(image_loc)
         shap.force_plot(explainer.expected_value, shap_values, pd.DataFrame(inputs, columns=features), matplotlib=True, show=False)
         plt.savefig(image_loc)
         return render_template('chance.html', chance = str(pred[0]*100)[:5], image_loc = image_loc, rand=random.random())       #random number to prevent cached images from being displayed 
