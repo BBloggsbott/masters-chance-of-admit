@@ -22,10 +22,16 @@ app.config.from_envvar('masters_chance_of_admit_SETTINGS', silent=True)
 
 @app.route('/')
 def show_analytics():
+    """
+    Show the analytics page.
+    """
     return render_template('show_analytics.html')
 
 @app.route('/calculate_chance', methods=['GET', 'POST'])
 def calculate_chance():
+    """
+    Calculate user's chances based on inputs
+    """
     error = None
     try:
         if request.method == 'POST':
