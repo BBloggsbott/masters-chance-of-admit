@@ -22,3 +22,6 @@ If face an issue, please notify it [here](https://github.com/BBloggsbott/masters
 ## Contributing
 
 Read the [Contributing Guidelines](https://github.com/BBloggsbott/masters-chance-of-admit/blob/master/CONTRIBUTING.md) before making a contribution. Please follow the [Pull Request Template](https://github.com/BBloggsbott/masters-chance-of-admit/blob/master/PULL_REQUEST_TEMPLATE.md) while making a PR. Please follow the [Code of Conduct](https://github.com/BBloggsbott/masters-chance-of-admit/blob/master/CODE_OF_CONDUCT.md)
+
+##License
+>......
