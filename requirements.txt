@@ -2,7 +2,7 @@ backcall==0.1.0
 Click==7.0
 cloudpickle==0.8.0
 cycler==0.10.0
-dask==1.1.4
+dask==2021.10.0
 decorator==4.4.0
 Flask==1.0.2
 ipython==7.4.0
