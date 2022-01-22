@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import random
 
-app = Flask(__name__) 
+app = Flask(__name__)
 app.config.from_object(__name__)
 app.config.update(dict(
     IMAGES_FOLDER=os.path.join(app.root_path, 'static'),
@@ -27,6 +27,34 @@ def show_analytics():
     """
     return render_template('show_analytics.html')
 
+LIMITS = {
+    'gre': (0, 340),
+    'cgpa': (1, 10),
+    'toefl': (1, 120),
+    'univ': (1, 5),
+    'sop': (1, 5),
+    'lor': (1, 5)
+}
+
+def verify_and_make_inputs(form, keys) -> np.ndarray:
+    result = []
+
+    for key in keys:
+        user_input = form[key]
+        value = int(user_input)
+
+        MIN, MAX = LIMITS[key]
+
+        if not MIN <= value <= MAX:
+            raise ValueError(f'Value of {key} is not within limits.')
+
+        result.append(value)
+
+    result.append(1 if 'research' in form.keys() else 0)
+
+    return np.array(result)
+
+
 @app.route('/calculate_chance', methods=['GET', 'POST'])
 def calculate_chance():
     """
@@ -36,18 +64,22 @@ def calculate_chance():
     try:
         if request.method == 'POST':
             if('toefl_req' in request.form.keys()):
-                f = open(os.path.join(app.root_path,'models', 'model_xtra_trees.pkl'), 'rb')
-                model = pickle.load(f)
-                f.close()
+                with open(os.path.join(app.root_path,'models', 'model_xtra_trees.pkl'), 'rb') as f:
+                    model = pickle.load(f)
+
                 features = ['GRE Score', 'TOEFL Score', 'University Rating', 'SOP', 'LOR', 'CGPA', 'Research']
                 print(1 if 'research' in request.form.keys() else 0)
-                inputs = np.array([[int(request.form['gre']), int(request.form['toefl']), int(round(float(request.form['univ']))), float(request.form['sop']), float(request.form['lor']), float(request.form['cgpa']), 1 if 'research' in request.form.keys() else 0]])
+
+                form_keys = ['gre', 'toefl', 'univ', 'sop', 'lor', 'cgpa']
             else:
-                f = open(os.path.join(app.root_path,'models', 'model_xtra_trees_no_toefl.pkl'), 'rb')
-                model = pickle.load(f)
-                f.close()
+                with open(os.path.join(app.root_path,'models', 'model_xtra_trees_no_toefl.pkl'), 'rb') as f:
+                    model = pickle.load(f)
+
                 features = ['GRE Score', 'University Rating', 'SOP', 'LOR', 'CGPA', 'Research']
-                inputs = np.array([[int(request.form['gre']), int(round(float(request.form['univ']))), float(request.form['sop']), float(request.form['lor']), float(request.form['cgpa']), 1 if 'research' in request.form.keys() else 0]])
+
+                form_keys = ['gre', 'univ', 'sop', 'lor', 'cgpa']
+
+            inputs = verify_and_make_inputs(request.form, form_keys)
             pred = model.predict(inputs)
             explainer = shap.TreeExplainer(model)
             shap_values = explainer.shap_values(inputs)
@@ -56,7 +88,10 @@ def calculate_chance():
                 os.remove(image_loc)
             shap.force_plot(explainer.expected_value, shap_values, pd.DataFrame(inputs, columns=features), matplotlib=True, show=False)
             plt.savefig(image_loc)
-            return render_template('chance.html', chance = str(pred[0]*100)[:5], image_loc = image_loc, rand=random.random())       #random number to prevent cached images from being displayed 
-    except:
+            return render_template('chance.html', chance = str(pred[0]*100)[:5], image_loc = image_loc, rand=random.random())       #random number to prevent cached images from being displayed
+    except Exception as e:
         error = "There was an error processing your request. Please make sure you entered the right values or try again."
+
+        error = '\n\n'.join([error, str(e)])
+
     return render_template('calculate_chance.html', error = error)
