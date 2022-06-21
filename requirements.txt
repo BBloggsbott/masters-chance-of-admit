@@ -14,7 +14,7 @@ kiwisolver==1.0.1
 MarkupSafe==1.1.1
 matplotlib==3.0.3
 networkx==2.2
-numpy==1.16.2
+numpy==1.22.0
 pandas==0.24.2
 parso==0.3.4
 pexpect==4.6.0
