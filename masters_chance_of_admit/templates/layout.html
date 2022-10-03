@@ -10,6 +10,41 @@
   gtag('config', 'UA-136775505-1');
 </script>
 
+<script>
+  function validateForm() {
+    var gre = document.forms["calcChance"]["gre"].value;
+    var cgpa = document.forms["calcChance"]["cgpa"].value;
+    var toefl = document.forms["calcChance"]["toefl"].value;
+    var univ = document.forms["calcChance"]["univ"].value;
+    var sop = document.forms["calcChance"]["sop"].value;    
+    var lor = document.forms["calcChance"]["lor"].value;
+    if (gre>340) {
+      alert("GRE score must be less than or equal to 340");
+      return false;
+    }
+    if (cgpa>10) {
+      alert("CGPA must be less or equal to than 10");
+      return false;
+    }
+    if (toefl>120) {
+      alert("TOEFL score must be less than or equal to 120");
+      return false;
+    }
+    if (univ>5) {
+      alert("University Rating must be less than or equal to 5");
+      return false;
+    }
+    if (sop>5) {
+      alert("Strength of Statement of Purpose must be less than or equal to 5");
+      return false;
+    }
+    if (lor>5) {
+      alert("Strength of Letter of Recommendation must be less than or equal to 5");
+      return false;
+    }
+  }
+  </script>
+
 </head>
 <title>Masters - Chance of Admittance</title>
 <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">

@@ -3,7 +3,7 @@
 <h2>Calculate your Chances</h2>
 {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
 {% if chance %}<p class=success>Your chance of admittance is {{ chance }}%</p>{% endif %}
-    <form action="/calculate_chance" method=post>
+    <form action="/calculate_chance" method=post name="calcChance" onsubmit="return validateForm">
   <dl>
     <dt>GRE Score (out of 340):
     <dd><input type=text name=gre required>
